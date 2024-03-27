@@ -2,10 +2,10 @@
 
 namespace Garanaw\LaravelNumeral\Casts;
 
+use Garanaw\LaravelNumeral\Support\Number;
+use Garanaw\LaravelNumeral\Support\Numeral;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Support\Number;
-use Illuminate\Support\Numeral;
 
 class AsNumeral implements Castable
 {

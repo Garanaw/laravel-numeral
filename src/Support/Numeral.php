@@ -323,7 +323,7 @@ class Numeral implements BaseStringable
     /**
      * Determines if the given numeral is close to the instance.
      */
-    public function nearlyEquals(int|float|self $value, int $precision = 6): bool
+    public function nearlyEquals(int|float|self $value, int|float $precision = 6): bool
     {
         return round($this->value, $precision) === round($this->getNumeralValue($value), $precision);
     }

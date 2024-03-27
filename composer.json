@@ -2,14 +2,12 @@
     "name": "garanaw/laravel-numeral",
     "description": "The missing Numeral class from Laravel",
     "type": "library",
+    "require": {
+        "php": ">=8.2|^8.3"
+    },
     "require-dev": {
         "pestphp/pest": "^2.34",
         "orchestra/testbench": "^9.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Garanaw\\LaravelNumeral\\": "src/"
-        }
     },
     "authors": [
         {
@@ -17,8 +15,15 @@
             "email": "garanaw@gmail.com"
         }
     ],
-    "require": {
-        "php": ">=8.2|^8.3"
+    "autoload": {
+        "psr-4": {
+            "Garanaw\\LaravelNumeral\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Garanaw\\LaravelNumeral\\Tests\\": "tests/"
+        }
     },
     "minimum-stability": "stable",
     "config": {

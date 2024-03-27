@@ -145,7 +145,7 @@ class Number
      */
     public static function isZero($value): bool
     {
-        return (int) $value === 0;
+        return ((int) $value) === 0;
     }
 
     /**
