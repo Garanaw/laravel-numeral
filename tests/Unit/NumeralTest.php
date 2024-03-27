@@ -5,7 +5,6 @@ use Garanaw\LaravelNumeral\Support\Number;
 
 describe(Numeral::class, function () {
     test('num returns a numeral', function () {
-        include_once __DIR__.'/../../src/helpers.php';
         $this->assertInstanceOf(Numeral::class, num(1));
     });
 
