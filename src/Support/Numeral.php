@@ -3,7 +3,6 @@
 namespace Garanaw\LaravelNumeral\Support;
 
 use Illuminate\Support\Traits\Conditionable;
-use Illuminate\Support\Traits\Dumpable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 use InvalidArgumentException;
@@ -11,7 +10,7 @@ use Stringable as BaseStringable;
 
 class Numeral implements BaseStringable
 {
-    use Conditionable, Dumpable, Macroable, Tappable;
+    use Conditionable, Macroable, Tappable;
 
     protected $value;
 
@@ -714,6 +713,16 @@ class Numeral implements BaseStringable
         dump($this->value, ...$args);
 
         return $this;
+    }
+
+    /**
+     * Dump the numeral and terminate the execution.
+     *
+     * @param  mixed  ...$args
+     */
+    public function dd(...$args)
+    {
+        dd($this->value, ...$args);
     }
 
     /**
