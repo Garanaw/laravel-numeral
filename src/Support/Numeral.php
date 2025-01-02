@@ -113,6 +113,44 @@ class Numeral implements BaseStringable
     }
 
     /**
+     * Determine if the numeral is between the given min and max values.
+     *
+     * @param  int|float|self  $min
+     * @param  int|float|self  $max
+     */
+    public function isBetween($min, $max): bool
+    {
+        $min = $this->getNumeralValue($min);
+        $max = $this->getNumeralValue($max);
+
+        return Number::isBetween($this->value, $min, $max);
+    }
+
+    /**
+     * Determine if the numeral is in scientific notation.
+     */
+    public function isScientificNotation(): bool
+    {
+        return Number::isScientificNotation($this->value);
+    }
+
+    /**
+     * Determine if the numeral is in scientific E notation.
+     */
+    public function isScientificENotation(): bool
+    {
+        return Number::isScientificENotation($this->value);
+    }
+
+    /**
+     * Convert the numeral to a real number.
+     */
+    public function toReal(): static
+    {
+        return new static(Number::scientificToReal($this->value));
+    }
+
+    /**
      * Inverts the sign of the number.
      */
     public function negate(): static

@@ -527,4 +527,17 @@ describe(Number::class, function () {
         $this->assertSame(362880, Number::factorial(9));
         $this->assertSame(3628800, Number::factorial(10));
     });
+
+    it('Scientific Notation', function () {
+        $this->assertTrue(Number::isScientificNotation(1.0e10));
+        $this->assertTrue(Number::isScientificNotation(1.0e-10));
+        $this->assertTrue(Number::isScientificNotation(1.0e+10));
+
+        $this->assertFalse(Number::isScientificNotation(1));
+        $this->assertFalse(Number::isScientificNotation(1.0));
+        $this->assertFalse(Number::isScientificNotation(1.1));
+
+        $this->assertSame(10000000000, Number::scientificToReal(1.0e10));
+        $this->assertSame(0.0000000001, Number::scientificToReal(1.0e-10));
+    });
 });
