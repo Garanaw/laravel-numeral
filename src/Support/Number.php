@@ -140,6 +140,50 @@ class Number extends \Illuminate\Support\Number
     }
 
     /**
+     * Determine if the given value is between the given min and max values.
+     *
+     * @param  int|float  $value
+     * @param  int|float  $min
+     * @param  int|float  $max
+     * @return bool
+     */
+    public static function isBetween($value, $min, $max): bool
+    {
+        return $value >= $min && $value <= $max;
+    }
+
+    /**
+     * Determine if the given value is in scientific notation.
+     *
+     * @param  int|float|string  $value
+     * @return bool
+     */
+    public static function isScientificNotation($value): bool
+    {
+        return static::isScientificENotation($value);
+    }
+
+    /**
+     * Determine if the given value is in scientific notation with an 'e' character.
+     *
+     * @param  int|float|string  $value
+     * @return bool
+     */
+    public static function isScientificENotation($value): bool
+    {
+        return static::isNumeric($value) && preg_match('/[eE]/', $value) === 1;
+    }
+
+    public static function scientificToReal($scientificNotation, int $precision = 10): int|float|string
+    {
+        if (self::isScientificNotation($scientificNotation) === false) {
+            return $scientificNotation;
+        }
+
+        return static::format($scientificNotation, $precision);
+    }
+
+    /**
      * Counts the length of a numeral.
      *
      * @param  $value
