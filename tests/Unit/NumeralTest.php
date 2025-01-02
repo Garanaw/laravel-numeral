@@ -848,7 +848,7 @@ describe(Numeral::class, function () {
 
     it('converts scientific to real', function () {
         $this->assertSame(1000000, $this->numeral(1e6)->toInt()->value());
-        $this->assertSame(1000000, $this->numeral(1e6)->value());
+        $this->assertSame(1000000.0, $this->numeral(1e6)->value());
         $this->assertSame(0.000001, $this->numeral(1e-6)->value());
         $this->assertSame(0.000001, $this->numeral(1e-6)->value());
     });

@@ -529,15 +529,15 @@ describe(Number::class, function () {
     });
 
     it('Scientific Notation', function () {
-        $this->assertTrue(Number::isScientificNotation(1.0e10));
+        $this->assertTrue(Number::isScientificNotation('3.3e12'));
         $this->assertTrue(Number::isScientificNotation(1.0e-10));
-        $this->assertTrue(Number::isScientificNotation(1.0e+10));
+        $this->assertTrue(Number::isScientificNotation(3.3e-7));
 
         $this->assertFalse(Number::isScientificNotation(1));
         $this->assertFalse(Number::isScientificNotation(1.0));
         $this->assertFalse(Number::isScientificNotation(1.1));
 
-        $this->assertSame(10000000000, Number::scientificToReal(1.0e10));
-        $this->assertSame(0.0000000001, Number::scientificToReal(1.0e-10));
+        $this->assertSame(10000000000.0, Number::scientificToReal(1.0e10));
+        $this->assertSame('0.0000000001', Number::scientificToReal(1.0e-10));
     });
 });
