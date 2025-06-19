@@ -719,6 +719,63 @@ class Numeral implements BaseStringable
     }
 
     /**
+     * Calculate the mean (average) of an array of numbers.
+     */
+    public static function mean(array $numbers): static
+    {
+        if (empty($numbers)) {
+            return new static(0);
+        }
+
+        $sum = array_sum($numbers);
+        return new static($sum / count($numbers));
+    }
+
+    /**
+     * Calculate the median of an array of numbers.
+     */
+    public static function median(array $numbers): static
+    {
+        if (empty($numbers)) {
+            return new static(0);
+        }
+
+        sort($numbers);
+        $count = count($numbers);
+        $middle = floor($count / 2);
+
+        if ($count % 2 === 0) {
+            // Even number of elements - average of middle two
+            return new static(($numbers[$middle - 1] + $numbers[$middle]) / 2);
+        } else {
+            // Odd number of elements - middle element
+            return new static($numbers[$middle]);
+        }
+    }
+
+    /**
+     * Calculate the mode (most frequent value) of an array of numbers.
+     * Returns the first mode found if multiple modes exist with same frequency.
+     */
+    public static function mode(array $numbers): static
+    {
+        if (empty($numbers)) {
+            return new static(0);
+        }
+
+        $frequencies = array_count_values($numbers);
+        $maxFrequency = max($frequencies);
+        
+        foreach ($frequencies as $value => $frequency) {
+            if ($frequency === $maxFrequency) {
+                return new static($value);
+            }
+        }
+
+        return new static($numbers[0]);
+    }
+
+    /**
      * Get a new numeral instance for the given value.
      *
      * @param  mixed  $value

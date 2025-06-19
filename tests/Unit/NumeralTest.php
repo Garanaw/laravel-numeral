@@ -853,3 +853,31 @@ describe(Numeral::class, function () {
         $this->assertSame(0.000001, $this->numeral(1e-6)->value());
     });
 });
+
+
+
+    it('calculates mean', function () {
+        $this->assertSame(3.0, Numeral::mean([1, 2, 3, 4, 5])->value());
+        $this->assertSame(2.5, Numeral::mean([1, 2, 3, 4])->value());
+        $this->assertSame(5.0, Numeral::mean([5])->value());
+        $this->assertSame(0, Numeral::mean([])->value());
+        $this->assertSame(-1.0, Numeral::mean([-5, -2, 0, 3, 4])->value());
+    });
+
+    it('calculates median', function () {
+        $this->assertSame(3, Numeral::median([1, 2, 3, 4, 5])->value());
+        $this->assertSame(2.5, Numeral::median([1, 2, 3, 4])->value());
+        $this->assertSame(3, Numeral::median([5, 1, 3, 2, 4])->value());
+        $this->assertSame(5.0, Numeral::median([5])->value());
+        $this->assertSame(0, Numeral::median([])->value());
+        $this->assertSame(1.5, Numeral::median([1, 2])->value());
+    });
+
+    it('calculates mode', function () {
+        $this->assertSame(3, Numeral::mode([1, 2, 3, 3, 4])->value());
+        $this->assertSame(2, Numeral::mode([1, 2, 2, 3, 4])->value());
+        $this->assertSame(1, Numeral::mode([1, 1, 2, 2, 3])->value()); // First mode when tied
+        $this->assertSame(5, Numeral::mode([5])->value());
+        $this->assertSame(0, Numeral::mode([])->value());
+        $this->assertSame(7, Numeral::mode([7, 8, 7, 9, 7])->value());
+    });
