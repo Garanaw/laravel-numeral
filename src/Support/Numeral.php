@@ -723,12 +723,7 @@ class Numeral implements BaseStringable
      */
     public static function mean(array $numbers): static
     {
-        if (empty($numbers)) {
-            return new static(0);
-        }
-
-        $sum = array_sum($numbers);
-        return new static($sum / count($numbers));
+        return new static(Number::mean($numbers));
     }
 
     /**
@@ -736,21 +731,7 @@ class Numeral implements BaseStringable
      */
     public static function median(array $numbers): static
     {
-        if (empty($numbers)) {
-            return new static(0);
-        }
-
-        sort($numbers);
-        $count = count($numbers);
-        $middle = floor($count / 2);
-
-        if ($count % 2 === 0) {
-            // Even number of elements - average of middle two
-            return new static(($numbers[$middle - 1] + $numbers[$middle]) / 2);
-        } else {
-            // Odd number of elements - middle element
-            return new static($numbers[$middle]);
-        }
+        return new static(Number::median($numbers));
     }
 
     /**
@@ -759,20 +740,7 @@ class Numeral implements BaseStringable
      */
     public static function mode(array $numbers): static
     {
-        if (empty($numbers)) {
-            return new static(0);
-        }
-
-        $frequencies = array_count_values($numbers);
-        $maxFrequency = max($frequencies);
-        
-        foreach ($frequencies as $value => $frequency) {
-            if ($frequency === $maxFrequency) {
-                return new static($value);
-            }
-        }
-
-        return new static($numbers[0]);
+        return new static(Number::mode($numbers));
     }
 
     /**

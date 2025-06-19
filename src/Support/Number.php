@@ -255,4 +255,61 @@ class Number extends \Illuminate\Support\Number
 
         return $number * static::factorial($number - 1);
     }
+
+    /**
+     * Calculate the mean (average) of an array of numbers.
+     */
+    public static function mean(array $numbers): int|float
+    {
+        if (empty($numbers)) {
+            return 0;
+        }
+
+        $sum = array_sum($numbers);
+        return $sum / count($numbers);
+    }
+
+    /**
+     * Calculate the median of an array of numbers.
+     */
+    public static function median(array $numbers): int|float
+    {
+        if (empty($numbers)) {
+            return 0;
+        }
+
+        sort($numbers);
+        $count = count($numbers);
+        $middle = floor($count / 2);
+
+        if ($count % 2 === 0) {
+            // Even number of elements - average of middle two
+            return ($numbers[$middle - 1] + $numbers[$middle]) / 2;
+        } else {
+            // Odd number of elements - middle element
+            return $numbers[$middle];
+        }
+    }
+
+    /**
+     * Calculate the mode (most frequent value) of an array of numbers.
+     * Returns the first mode found if multiple modes exist with same frequency.
+     */
+    public static function mode(array $numbers): int|float
+    {
+        if (empty($numbers)) {
+            return 0;
+        }
+
+        $frequencies = array_count_values($numbers);
+        $maxFrequency = max($frequencies);
+        
+        foreach ($frequencies as $value => $frequency) {
+            if ($frequency === $maxFrequency) {
+                return $value;
+            }
+        }
+
+        return $numbers[0];
+    }
 }
