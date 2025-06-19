@@ -719,6 +719,115 @@ class Numeral implements BaseStringable
     }
 
     /**
+     * Calculate hypotenuse with another value (sqrt(x² + y²)).
+     */
+    public function hypot(int|float|self $y): static
+    {
+        return new static(Number::hypot($this->value, $this->getNumeralValue($y)));
+    }
+
+    /**
+     * Convert degrees to radians.
+     */
+    public function deg2rad(): static
+    {
+        return new static(Number::deg2rad($this->value));
+    }
+
+    /**
+     * Convert radians to degrees.
+     */
+    public function rad2deg(): static
+    {
+        return new static(Number::rad2deg($this->value));
+    }
+
+    /**
+     * Floating point remainder.
+     */
+    public function fmod(int|float|self $divisor): static
+    {
+        return new static(Number::fmod($this->value, $this->getNumeralValue($divisor)));
+    }
+
+    /**
+     * Integer division.
+     */
+    public function intdiv(int|self $divisor): static
+    {
+        $divisorValue = $this->getNumeralValue($divisor);
+        if (!is_int($divisorValue)) {
+            $divisorValue = (int) $divisorValue;
+        }
+        
+        return new static(Number::intdiv((int) $this->value, $divisorValue));
+    }
+
+    /**
+     * IEEE remainder.
+     */
+    public function remainder(int|float|self $divisor): static
+    {
+        return new static(Number::remainder($this->value, $this->getNumeralValue($divisor)));
+    }
+
+    /**
+     * Truncate to integer (remove decimal part).
+     */
+    public function truncate(): static
+    {
+        return new static(Number::truncate($this->value));
+    }
+
+    /**
+     * Round to nearest multiple of a value.
+     */
+    public function roundToNearest(int|float|self $multiple): static
+    {
+        return new static(Number::roundToNearest($this->value, $this->getNumeralValue($multiple)));
+    }
+
+    /**
+     * Get number of decimal places.
+     */
+    public function precision(): int
+    {
+        return Number::precision($this->value);
+    }
+
+    /**
+     * Check if number is prime.
+     */
+    public function isPrime(): bool
+    {
+        return Number::isPrime((int) $this->value);
+    }
+
+    /**
+     * Check if number is a perfect number.
+     */
+    public function isPerfect(): bool
+    {
+        return Number::isPerfect((int) $this->value);
+    }
+
+    /**
+     * Get all divisors of the number.
+     */
+    public function divisors(): array
+    {
+        return Number::divisors((int) $this->value);
+    }
+
+    /**
+     * Get prime factors of the number.
+     */
+    public function factors(): array
+    {
+        return Number::factors((int) $this->value);
+    }
+
+    /**
      * Get a new numeral instance for the given value.
      *
      * @param  mixed  $value

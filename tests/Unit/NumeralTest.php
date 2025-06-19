@@ -852,6 +852,126 @@ describe(Numeral::class, function () {
         $this->assertSame(0.000001, $this->numeral(1e-6)->value());
         $this->assertSame(0.000001, $this->numeral(1e-6)->value());
     });
+
+    it('calculates hypot', function () {
+        $this->assertSame(5.0, $this->numeral(3)->hypot(4)->value());
+        $this->assertSame(5.0, $this->numeral(4)->hypot(3)->value());
+        $this->assertSame(sqrt(2), $this->numeral(1)->hypot(1)->value());
+        $this->assertSame(0.0, $this->numeral(0)->hypot(0)->value());
+        $this->assertSame(13.0, $this->numeral(5)->hypot(12)->value());
+    });
+
+    it('converts degrees to radians', function () {
+        $this->assertEqualsWithDelta(pi(), $this->numeral(180)->deg2rad()->value(), 0.0001);
+        $this->assertEqualsWithDelta(pi() / 2, $this->numeral(90)->deg2rad()->value(), 0.0001);
+        $this->assertEqualsWithDelta(0.0, $this->numeral(0)->deg2rad()->value(), 0.0001);
+        $this->assertEqualsWithDelta(2 * pi(), $this->numeral(360)->deg2rad()->value(), 0.0001);
+    });
+
+    it('converts radians to degrees', function () {
+        $this->assertEqualsWithDelta(180.0, $this->numeral(pi())->rad2deg()->value(), 0.0001);
+        $this->assertEqualsWithDelta(90.0, $this->numeral(pi() / 2)->rad2deg()->value(), 0.0001);
+        $this->assertEqualsWithDelta(0.0, $this->numeral(0)->rad2deg()->value(), 0.0001);
+        $this->assertEqualsWithDelta(360.0, $this->numeral(2 * pi())->rad2deg()->value(), 0.0001);
+    });
+
+    it('calculates fmod', function () {
+        $this->assertSame(1.0, $this->numeral(5)->fmod(2)->value());
+        $this->assertSame(0.0, $this->numeral(6)->fmod(3)->value());
+        $this->assertEqualsWithDelta(0.5, $this->numeral(5.5)->fmod(2.5)->value(), 0.0001);
+        $this->assertSame(-1.0, $this->numeral(-5)->fmod(2)->value());
+    });
+
+    it('calculates intdiv', function () {
+        $this->assertSame(2, $this->numeral(5)->intdiv(2)->value());
+        $this->assertSame(3, $this->numeral(7)->intdiv(2)->value());
+        $this->assertSame(0, $this->numeral(1)->intdiv(2)->value());
+        $this->assertSame(-2, $this->numeral(-5)->intdiv(2)->value());
+    });
+
+    it('calculates remainder', function () {
+        $this->assertSame(1.0, $this->numeral(5)->remainder(2)->value());
+        $this->assertSame(0.0, $this->numeral(6)->remainder(3)->value());
+        $this->assertSame(-1.0, $this->numeral(7)->remainder(2)->value());
+        $this->assertSame(1.0, $this->numeral(-7)->remainder(2)->value());
+    });
+
+    it('truncates numbers', function () {
+        $this->assertSame(3, $this->numeral(3.7)->truncate()->value());
+        $this->assertSame(3, $this->numeral(3.2)->truncate()->value());
+        $this->assertSame(-3, $this->numeral(-3.7)->truncate()->value());
+        $this->assertSame(-3, $this->numeral(-3.2)->truncate()->value());
+        $this->assertSame(0, $this->numeral(0.9)->truncate()->value());
+    });
+
+    it('rounds to nearest multiple', function () {
+        $this->assertSame(10.0, $this->numeral(12)->roundToNearest(5)->value());
+        $this->assertSame(15.0, $this->numeral(13)->roundToNearest(5)->value());
+        $this->assertSame(2.5, $this->numeral(2.3)->roundToNearest(0.5)->value());
+        $this->assertSame(3.0, $this->numeral(2.8)->roundToNearest(0.5)->value());
+        $this->assertSame(0.0, $this->numeral(5)->roundToNearest(0)->value());
+    });
+
+    it('gets precision', function () {
+        $this->assertSame(0, $this->numeral(5)->precision());
+        $this->assertSame(1, $this->numeral(5.0)->precision());
+        $this->assertSame(1, $this->numeral(3.2)->precision());
+        $this->assertSame(3, $this->numeral(3.142)->precision());
+        $this->assertSame(6, $this->numeral(3.141592)->precision());
+        $this->assertSame(0, $this->numeral(100)->precision());
+    });
+
+    it('checks if prime', function () {
+        $this->assertTrue($this->numeral(2)->isPrime());
+        $this->assertTrue($this->numeral(3)->isPrime());
+        $this->assertTrue($this->numeral(5)->isPrime());
+        $this->assertTrue($this->numeral(7)->isPrime());
+        $this->assertTrue($this->numeral(11)->isPrime());
+        $this->assertTrue($this->numeral(13)->isPrime());
+        $this->assertTrue($this->numeral(17)->isPrime());
+        $this->assertTrue($this->numeral(97)->isPrime());
+
+        $this->assertFalse($this->numeral(0)->isPrime());
+        $this->assertFalse($this->numeral(1)->isPrime());
+        $this->assertFalse($this->numeral(4)->isPrime());
+        $this->assertFalse($this->numeral(6)->isPrime());
+        $this->assertFalse($this->numeral(8)->isPrime());
+        $this->assertFalse($this->numeral(9)->isPrime());
+        $this->assertFalse($this->numeral(10)->isPrime());
+        $this->assertFalse($this->numeral(100)->isPrime());
+    });
+
+    it('checks if perfect', function () {
+        $this->assertTrue($this->numeral(6)->isPerfect());    // 1 + 2 + 3 = 6
+        $this->assertTrue($this->numeral(28)->isPerfect());   // 1 + 2 + 4 + 7 + 14 = 28
+        $this->assertTrue($this->numeral(496)->isPerfect());  // Perfect number
+
+        $this->assertFalse($this->numeral(0)->isPerfect());
+        $this->assertFalse($this->numeral(1)->isPerfect());
+        $this->assertFalse($this->numeral(2)->isPerfect());
+        $this->assertFalse($this->numeral(8)->isPerfect());
+        $this->assertFalse($this->numeral(12)->isPerfect());
+        $this->assertFalse($this->numeral(100)->isPerfect());
+    });
+
+    it('gets divisors', function () {
+        $this->assertSame([1, 2, 3, 6], $this->numeral(6)->divisors());
+        $this->assertSame([1, 2, 4, 5, 10, 20], $this->numeral(20)->divisors());
+        $this->assertSame([1, 12], $this->numeral(12)->divisors());
+        $this->assertSame([1], $this->numeral(1)->divisors());
+        $this->assertSame([], $this->numeral(0)->divisors());
+        $this->assertSame([1, 2, 3, 6], $this->numeral(-6)->divisors()); // Absolute value
+    });
+
+    it('gets prime factors', function () {
+        $this->assertSame([2, 3], $this->numeral(6)->factors());
+        $this->assertSame([2, 2, 3], $this->numeral(12)->factors());
+        $this->assertSame([2, 2, 5], $this->numeral(20)->factors());
+        $this->assertSame([7], $this->numeral(7)->factors());
+        $this->assertSame([2, 2, 2, 2, 2], $this->numeral(32)->factors());
+        $this->assertSame([], $this->numeral(0)->factors());
+        $this->assertSame([2, 3], $this->numeral(-6)->factors()); // Absolute value
+    });
 });
 
 

@@ -312,4 +312,190 @@ class Number extends \Illuminate\Support\Number
 
         return $numbers[0];
     }
+
+    /**
+     * Calculate hypotenuse (sqrt(x² + y²)).
+     */
+    public static function hypot(int|float $x, int|float $y): float
+    {
+        return sqrt($x * $x + $y * $y);
+    }
+
+    /**
+     * Convert degrees to radians.
+     */
+    public static function deg2rad(int|float $degrees): float
+    {
+        return deg2rad($degrees);
+    }
+
+    /**
+     * Convert radians to degrees.
+     */
+    public static function rad2deg(int|float $radians): float
+    {
+        return rad2deg($radians);
+    }
+
+    /**
+     * Floating point remainder.
+     */
+    public static function fmod(int|float $dividend, int|float $divisor): float
+    {
+        return fmod($dividend, $divisor);
+    }
+
+    /**
+     * Integer division.
+     */
+    public static function intdiv(int $dividend, int $divisor): int
+    {
+        return intdiv($dividend, $divisor);
+    }
+
+    /**
+     * IEEE remainder.
+     */
+    public static function remainder(int|float $dividend, int|float $divisor): float
+    {
+        return $dividend - $divisor * round($dividend / $divisor);
+    }
+
+    /**
+     * Truncate to integer (remove decimal part).
+     */
+    public static function truncate(int|float $number): int
+    {
+        return (int) $number;
+    }
+
+    /**
+     * Round to nearest multiple of a value.
+     */
+    public static function roundToNearest(int|float $number, int|float $multiple): int|float
+    {
+        if ($multiple == 0) {
+            return $number;
+        }
+        
+        return round($number / $multiple) * $multiple;
+    }
+
+    /**
+     * Get number of decimal places.
+     */
+    public static function precision(int|float $number): int
+    {
+        $string = (string) $number;
+        
+        if (strpos($string, '.') === false) {
+            return 0;
+        }
+        
+        return strlen(substr(strrchr($string, '.'), 1));
+    }
+
+    /**
+     * Check if number is prime.
+     */
+    public static function isPrime(int $number): bool
+    {
+        if ($number < 2) {
+            return false;
+        }
+        
+        if ($number === 2) {
+            return true;
+        }
+        
+        if ($number % 2 === 0) {
+            return false;
+        }
+        
+        for ($i = 3; $i <= sqrt($number); $i += 2) {
+            if ($number % $i === 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    /**
+     * Check if number is a perfect number.
+     */
+    public static function isPerfect(int $number): bool
+    {
+        if ($number < 1) {
+            return false;
+        }
+        
+        $sum = 0;
+        for ($i = 1; $i < $number; $i++) {
+            if ($number % $i === 0) {
+                $sum += $i;
+            }
+        }
+        
+        return $sum === $number;
+    }
+
+    /**
+     * Get all divisors of a number.
+     */
+    public static function divisors(int $number): array
+    {
+        if ($number === 0) {
+            return [];
+        }
+        
+        $number = abs($number);
+        $divisors = [];
+        
+        for ($i = 1; $i <= sqrt($number); $i++) {
+            if ($number % $i === 0) {
+                $divisors[] = $i;
+                if ($i !== $number / $i) {
+                    $divisors[] = $number / $i;
+                }
+            }
+        }
+        
+        sort($divisors);
+        return $divisors;
+    }
+
+    /**
+     * Get prime factors of a number.
+     */
+    public static function factors(int $number): array
+    {
+        if ($number === 0) {
+            return [];
+        }
+        
+        $number = abs($number);
+        $factors = [];
+        
+        // Handle factor 2
+        while ($number % 2 === 0) {
+            $factors[] = 2;
+            $number = $number / 2;
+        }
+        
+        // Handle odd factors
+        for ($i = 3; $i <= sqrt($number); $i += 2) {
+            while ($number % $i === 0) {
+                $factors[] = $i;
+                $number = $number / $i;
+            }
+        }
+        
+        // If number is still greater than 2, then it's a prime
+        if ($number > 2) {
+            $factors[] = $number;
+        }
+        
+        return $factors;
+    }
 }
