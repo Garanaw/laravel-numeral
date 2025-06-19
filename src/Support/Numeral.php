@@ -719,31 +719,6 @@ class Numeral implements BaseStringable
     }
 
     /**
-     * Calculate the mean (average) of an array of numbers.
-     */
-    public static function mean(array $numbers): static
-    {
-        return new static(Number::mean($numbers));
-    }
-
-    /**
-     * Calculate the median of an array of numbers.
-     */
-    public static function median(array $numbers): static
-    {
-        return new static(Number::median($numbers));
-    }
-
-    /**
-     * Calculate the mode (most frequent value) of an array of numbers.
-     * Returns the first mode found if multiple modes exist with same frequency.
-     */
-    public static function mode(array $numbers): static
-    {
-        return new static(Number::mode($numbers));
-    }
-
-    /**
      * Get a new numeral instance for the given value.
      *
      * @param  mixed  $value

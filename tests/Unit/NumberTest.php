@@ -540,4 +540,30 @@ describe(Number::class, function () {
         $this->assertSame(10000000000.0, Number::scientificToReal(1.0e10));
         $this->assertSame('0.0000000001', Number::scientificToReal(1.0e-10));
     });
+
+    it('calculates mean', function () {
+        $this->assertSame(3.0, Number::mean([1, 2, 3, 4, 5]));
+        $this->assertSame(2.5, Number::mean([1, 2, 3, 4]));
+        $this->assertSame(5.0, Number::mean([5]));
+        $this->assertSame(0, Number::mean([]));
+        $this->assertSame(-1.0, Number::mean([-5, -2, 0, 3, 4]));
+    });
+
+    it('calculates median', function () {
+        $this->assertSame(3, Number::median([1, 2, 3, 4, 5]));
+        $this->assertSame(2.5, Number::median([1, 2, 3, 4]));
+        $this->assertSame(3, Number::median([5, 1, 3, 2, 4]));
+        $this->assertSame(5.0, Number::median([5]));
+        $this->assertSame(0, Number::median([]));
+        $this->assertSame(1.5, Number::median([1, 2]));
+    });
+
+    it('calculates mode', function () {
+        $this->assertSame(3, Number::mode([1, 2, 3, 3, 4]));
+        $this->assertSame(2, Number::mode([1, 2, 2, 3, 4]));
+        $this->assertSame(1, Number::mode([1, 1, 2, 2, 3])); // First mode when tied
+        $this->assertSame(5, Number::mode([5]));
+        $this->assertSame(0, Number::mode([]));
+        $this->assertSame(7, Number::mode([7, 8, 7, 9, 7]));
+    });
 });
